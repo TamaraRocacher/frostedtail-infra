@@ -1,0 +1,8 @@
+---
+- name: Configure The Frosted Tail server
+  hosts: frostedtail
+  become: true
+
+  tasks:
+    - name: Check connection
+      ansible.builtin.ping:
