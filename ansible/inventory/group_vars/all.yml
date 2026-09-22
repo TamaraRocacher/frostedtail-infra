@@ -7,3 +7,10 @@ base_packages:
 ssh_port: 4242
 ssh_allowed_users:
   - tamara
+
+ufw_default_incoming_policy: deny
+ufw_default_outgoing_policy: allow
+
+ufw_allowed_ports:
+  - port: "{{ ssh_port }}"
+    proto: tcp
