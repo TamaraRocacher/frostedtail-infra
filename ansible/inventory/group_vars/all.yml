@@ -1,0 +1,9 @@
+---
+base_packages:
+  - curl
+  - git
+  - ca-certificates
+
+ssh_port: 4242
+ssh_allowed_users:
+  - tamara
