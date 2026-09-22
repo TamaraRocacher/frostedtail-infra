@@ -26,7 +26,7 @@ The application will use separate **staging** and **production** environments on
 .
 ├── ansible/
 │   ├── inventory/
-│   ├── group_vars/
+│   |   └── group_vars/
 │   ├── playbooks/
 │   └── roles/
 │
@@ -36,6 +36,18 @@ The application will use separate **staging** and **production** environments on
 │
 ├── .gitignore
 └── README.md
+```
+
+## Task Runner
+
+This project uses [just](https://github.com/casey/just) as a command runner for common infrastructure operations.
+
+The `justfile` is located at the root of the repository and provides short, consistent commands for recurring tasks across the project.
+
+List all available commands:
+
+```bash
+just
 ```
 
 ### Terraform
