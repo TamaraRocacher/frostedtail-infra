@@ -17,3 +17,4 @@
     - ssh
     - firewall
     - fail2ban
+    - unattended_upgrades
