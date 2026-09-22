@@ -1,0 +1,20 @@
+---
+- name: Configure The Frosted Tail server
+  hosts: frostedtail
+  become: true
+
+  tasks:
+    - name: Display server informations
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }} - {{ ansible_facts['architecture'] }}"
+
+    - name: Install base packages
+      ansible.builtin.apt:
+        name: "{{ base_packages}}"
+        state: present
+
+  roles:
+    - ssh
+    - firewall
+    - fail2ban
+    - unattended_upgrades

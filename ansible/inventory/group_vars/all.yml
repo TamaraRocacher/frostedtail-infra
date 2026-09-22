@@ -1,0 +1,20 @@
+---
+base_packages:
+  - curl
+  - git
+  - ca-certificates
+
+ssh_port: 4242
+ssh_allowed_users:
+  - tamara
+
+ufw_default_incoming_policy: deny
+ufw_default_outgoing_policy: allow
+
+ufw_allowed_ports:
+  - port: "{{ ssh_port }}"
+    proto: tcp
+
+fail2ban_ban_time: "24h"
+fail2ban_find_time: "5min"
+fail2ban_max_retry: 3
