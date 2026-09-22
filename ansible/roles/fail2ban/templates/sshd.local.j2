@@ -1,0 +1,10 @@
+# fail2ban ssh settings - Managed by Ansible
+# {{ ansible_managed }}
+[sshd]
+enabled = true
+port = {{ ssh_port }}
+bantime = {{ fail2ban_ban_time }}
+findtime = {{ fail2ban_find_time }}
+maxretry = {{ fail2ban_max_retry }}
+backend = systemd
+banaction = ufw
