@@ -19,4 +19,5 @@
     - fail2ban
     - unattended_upgrades
     - docker
+    - deployment
     
