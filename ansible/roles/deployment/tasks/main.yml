@@ -1,0 +1,17 @@
+---
+- name: Create deployment root directory
+  ansible.builtin.file:
+    path: "{{ deployment_root }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Create deployment environment directories
+  ansible.builtin.file:
+    path: "{{ deployment_root }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop: "{{ deployment_environments }}"
