@@ -1,10 +1,10 @@
 terraform {
-    required_providers {
-        ovh = {
-            source = "ovh/ovh"
-        }
+  required_providers {
+    ovh = {
+      source = "ovh/ovh"
     }
+  }
 }
 provider "ovh" {
-    endpoint = "ovh-eu"
+  endpoint = "ovh-eu"
 }

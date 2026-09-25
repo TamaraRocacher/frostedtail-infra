@@ -1,0 +1,68 @@
+---
+- name: Install Nginx & auth tool
+  ansible.builtin.apt:
+    name: 
+      - nginx
+      - python3-passlib
+    state: present
+
+- name: install Certbot and Nginx plugin
+  ansible.builtin.apt:
+    name:
+      - certbot
+      - python3-certbot-nginx
+    state: present
+
+- name: Configure staging basic auth
+  community.general.htpasswd:
+    path: /etc/nginx/.htpasswd-staging
+    name: "{{ staging_basic_auth_user }}"
+    password: "{{ staging_basic_auth_password }}"
+    owner: root
+    group: www-data
+    mode: "0640"
+    state: present
+  no_log: true
+
+
+- name: Deploy staging Nginx config
+  ansible.builtin.template:
+    src: staging.conf.j2
+    dest: /etc/nginx/sites-available/frostedtail-staging
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Nginx
+
+- name: Enable staging Nginx site
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/frostedtail-staging
+    dest: /etc/nginx/sites-enabled/frostedtail-staging
+    state: link
+  notify: Reload Nginx
+  when: not ansible_check_mode
+
+- name: Disable default Nginx site
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Reload Nginx
+
+- name: Validate Nginx configuration
+  ansible.builtin.command:
+    cmd: nginx -t
+  changed_when: false
+  check_mode: false
+
+- name: Obtain Let's Encrypt certificate for staging
+  ansible.builtin.command:
+    cmd: >
+      certbot certonly
+      --nginx
+      --non-interactive
+      --agree-tos
+      --email {{ letsencrypt_email }}
+      --domain {{ staging_domain }}
+  args:
+    creates: "/etc/letsencrypt/live/{{ staging_domain }}/fullchain.pem"
+  when: not ansible_check_mode

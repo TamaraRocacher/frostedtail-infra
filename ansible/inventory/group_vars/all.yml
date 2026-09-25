@@ -14,6 +14,10 @@ ufw_default_outgoing_policy: allow
 ufw_allowed_ports:
   - port: "{{ ssh_port }}"
     proto: tcp
+  - port: "80"
+    proto: tcp
+  - port: "443"
+    proto: tcp
 
 fail2ban_ban_time: "24h"
 fail2ban_find_time: "5min"
@@ -23,3 +27,9 @@ deployment_root: /opt/thefrostedtail
 
 deployment_environments:
   - staging
+
+letsencrypt_email: "thefrostedtail@gmail.com"
+staging_domain: "staging.thefrostedtail.fr"
+
+staging_basic_auth_user: "stagingUser"
+staging_basic_auth_password: "{{ lookup('ansible.builtin.env', 'STAGING_BASIC_AUTH_PASSWORD') }}"

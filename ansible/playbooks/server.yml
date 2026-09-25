@@ -20,4 +20,5 @@
     - unattended_upgrades
     - docker
     - deployment
+    - nginx
     
